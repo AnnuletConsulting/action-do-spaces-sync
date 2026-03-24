@@ -1,0 +1,27 @@
+{
+  "name": "action-do-spaces-sync",
+  "version": "1.0.0",
+  "description": "GitHub Action that syncs a repo or directory to a DigitalOcean Space",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "ncc build src/index.js -o dist --license licenses.txt",
+    "test": "node --test src/__tests__/index.test.js"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "keywords": [
+    "github-action",
+    "digitalocean",
+    "spaces",
+    "sync"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^3.0.0",
+    "@actions/exec": "^3.0.0"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.38.3"
+  }
+}
