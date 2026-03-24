@@ -19841,7 +19841,7 @@ async function createSpacesKey(keyName, bucket) {
 async function deleteSpacesKey(accessKey) {
   info(`Deleting temporary Spaces key: ${accessKey}`);
   try {
-    await captureOutput("doctl", ["spaces", "keys", "delete", accessKey, "--force"]);
+    await captureOutput("doctl", ["spaces", "keys", "delete", accessKey]);
     info("Temporary Spaces key deleted successfully.");
   } catch (err) {
     warning(`Failed to delete temporary Spaces key '${accessKey}': ${err.message}`);
