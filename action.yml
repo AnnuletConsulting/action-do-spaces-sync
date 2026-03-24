@@ -1,0 +1,56 @@
+name: 'DigitalOcean Spaces Sync'
+description: 'Syncs a repository folder to a DigitalOcean Spaces bucket. Requires digitalocean/action-doctl to be run first.'
+author: 'AnnuletConsulting'
+
+branding:
+  icon: 'upload-cloud'
+  color: 'blue'
+
+inputs:
+  spaces-bucket:
+    description: 'The name of the DigitalOcean Spaces bucket to sync to.'
+    required: true
+
+  spaces-region:
+    description: 'The DigitalOcean Spaces region (e.g. nyc3, sfo3, ams3, sgp1, fra1, syd1).'
+    required: true
+
+  spaces-folder:
+    description: 'The destination folder path within the Spaces bucket. Defaults to the bucket root.'
+    required: false
+    default: ''
+
+  is-public:
+    description: 'Set to "true" to make synced files publicly readable (ACL: public-read). Defaults to private.'
+    required: false
+    default: 'false'
+
+  repo-folder:
+    description: 'The local repository folder to sync. Defaults to the entire repository root.'
+    required: false
+    default: '.'
+
+  delete:
+    description: 'Set to "true" to delete files in the destination that do not exist in the source (mirrors the --delete flag).'
+    required: false
+    default: 'false'
+
+  access-key:
+    description: >
+      Optional DigitalOcean Spaces access key. When both access-key and secret-key are
+      provided the action skips creating and deleting a temporary key and uses these
+      credentials directly.
+    required: false
+    default: ''
+
+  secret-key:
+    description: >
+      Optional DigitalOcean Spaces secret key. When both access-key and secret-key are
+      provided the action skips creating and deleting a temporary key and uses these
+      credentials directly.
+    required: false
+    default: ''
+
+runs:
+  using: 'node24'
+  main: 'dist/index.js'
