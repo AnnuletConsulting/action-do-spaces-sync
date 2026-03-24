@@ -101,7 +101,7 @@ export function parseSpacesKeyOutput(output) {
 export function buildCreateSpacesKeyArgs(keyName, bucket) {
   return [
     'spaces', 'keys', 'create', keyName,
-    '--grants', `bucket=${bucket};permission=readwrite`,
+    '--grants', `"bucket=${bucket};permission=readwrite"`,
     '--output', 'json',
   ];
 }
