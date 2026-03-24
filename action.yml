@@ -1,4 +1,4 @@
-name: 'DigitalOcean Spaces Sync'
+name: 'DigitalOcean Spaces Repo Sync'
 description: 'Syncs a repository folder to a DigitalOcean Spaces bucket. Requires digitalocean/action-doctl to be run first.'
 author: 'AnnuletConsulting'
 
