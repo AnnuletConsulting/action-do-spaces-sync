@@ -4,7 +4,7 @@
   "description": "GitHub Action that syncs a repo or directory to a DigitalOcean Space",
   "type": "module",
   "scripts": {
-    "build": "esbuild src/index.js --bundle --platform=node --target=node24 --format=esm --outfile=dist/index.js",
+    "build": "esbuild src/index.js --bundle --platform=node --target=node24 --format=cjs --outfile=dist/index.cjs",
     "test": "node --test src/__tests__/index.test.js"
   },
   "engines": {
