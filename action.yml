@@ -35,6 +35,22 @@ inputs:
     required: false
     default: 'false'
 
+  access-key:
+    description: >
+      Optional DigitalOcean Spaces access key. When both access-key and secret-key are
+      provided the action skips creating and deleting a temporary key and uses these
+      credentials directly.
+    required: false
+    default: ''
+
+  secret-key:
+    description: >
+      Optional DigitalOcean Spaces secret key. When both access-key and secret-key are
+      provided the action skips creating and deleting a temporary key and uses these
+      credentials directly.
+    required: false
+    default: ''
+
 runs:
   using: 'node24'
   main: 'dist/index.js'
