@@ -92,6 +92,21 @@ export function parseSpacesKeyOutput(output) {
 }
 
 /**
+ * Builds the argument list for `doctl spaces keys create`.
+ *
+ * @param {string} keyName
+ * @param {string} bucket
+ * @returns {string[]}
+ */
+export function buildCreateSpacesKeyArgs(keyName, bucket) {
+  return [
+    'spaces', 'keys', 'create', keyName,
+    '--grants', `bucket=${bucket};permission=readwrite`,
+    '--output', 'json',
+  ];
+}
+
+/**
  * Creates a temporary DigitalOcean Spaces key with read-write permission
  * scoped to the given bucket.
  *
@@ -101,12 +116,7 @@ export function parseSpacesKeyOutput(output) {
  */
 export async function createSpacesKey(keyName, bucket) {
   core.info(`Creating temporary Spaces key: ${keyName}`);
-  const output = await captureOutput('doctl', [
-    'spaces', 'keys', 'create', keyName,
-    '--grants', `bucket=${bucket};permission=readwrite`,
-    '--output', 'json',
-    '--no-header',
-  ]);
+  const output = await captureOutput('doctl', buildCreateSpacesKeyArgs(keyName, bucket));
   return parseSpacesKeyOutput(output);
 }
 

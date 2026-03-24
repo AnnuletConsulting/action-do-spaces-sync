@@ -19821,9 +19821,8 @@ ${output}`);
   }
   return { accessKey, secretKey };
 }
-async function createSpacesKey(keyName, bucket) {
-  info(`Creating temporary Spaces key: ${keyName}`);
-  const output = await captureOutput("doctl", [
+function buildCreateSpacesKeyArgs(keyName, bucket) {
+  return [
     "spaces",
     "keys",
     "create",
@@ -19831,9 +19830,12 @@ async function createSpacesKey(keyName, bucket) {
     "--grants",
     `bucket=${bucket};permission=readwrite`,
     "--output",
-    "json",
-    "--no-header"
-  ]);
+    "json"
+  ];
+}
+async function createSpacesKey(keyName, bucket) {
+  info(`Creating temporary Spaces key: ${keyName}`);
+  const output = await captureOutput("doctl", buildCreateSpacesKeyArgs(keyName, bucket));
   return parseSpacesKeyOutput(output);
 }
 async function deleteSpacesKey(accessKey) {

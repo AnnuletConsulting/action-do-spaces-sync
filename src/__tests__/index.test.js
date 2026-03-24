@@ -1,6 +1,11 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { rfc3339Timestamp, parseSpacesKeyOutput, buildSyncArgs } from '../helpers.js';
+import {
+  rfc3339Timestamp,
+  parseSpacesKeyOutput,
+  buildCreateSpacesKeyArgs,
+  buildSyncArgs,
+} from '../helpers.js';
 
 // ---------------------------------------------------------------------------
 // rfc3339Timestamp
@@ -34,8 +39,14 @@ describe('parseSpacesKeyOutput', () => {
     assert.equal(secretKey, 'MYSECRETKEY');
   });
 
-  it('parses object response with AccessKey and SecretKey', () => {
-    const json = JSON.stringify({ AccessKey: 'AK', SecretKey: 'SK' });
+  it('parses documented doctl JSON fields with AccessKey and SecretKey', () => {
+    const json = JSON.stringify([{
+      Name: 'my-key',
+      AccessKey: 'AK',
+      SecretKey: 'SK',
+      Grants: 'bucket=my-bucket;permission=readwrite',
+      CreatedAt: '2026-03-24T01:34:04Z',
+    }]);
     const { accessKey, secretKey } = parseSpacesKeyOutput(json);
     assert.equal(accessKey, 'AK');
     assert.equal(secretKey, 'SK');
@@ -60,6 +71,23 @@ describe('parseSpacesKeyOutput', () => {
 
   it('throws on invalid JSON', () => {
     assert.throws(() => parseSpacesKeyOutput('not-json'), /Failed to parse/);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// buildCreateSpacesKeyArgs
+// ---------------------------------------------------------------------------
+describe('buildCreateSpacesKeyArgs', () => {
+  it('builds the doctl spaces keys create args without unsupported flags', () => {
+    assert.deepEqual(buildCreateSpacesKeyArgs('gha-do-sync-2026-03-24T01-34-04Z', 'annulet-stage'), [
+      'spaces', 'keys', 'create', 'gha-do-sync-2026-03-24T01-34-04Z',
+      '--grants', 'bucket=annulet-stage;permission=readwrite',
+      '--output', 'json',
+    ]);
+  });
+
+  it('does not include the unsupported --no-header flag', () => {
+    assert.equal(buildCreateSpacesKeyArgs('key-name', 'bucket-name').includes('--no-header'), false);
   });
 });
 
