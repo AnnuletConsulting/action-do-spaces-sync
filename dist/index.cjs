@@ -19828,7 +19828,7 @@ function buildCreateSpacesKeyArgs(keyName, bucket) {
     "create",
     keyName,
     "--grants",
-    `bucket=${bucket};permission=readwrite`,
+    `"bucket=${bucket};permission=readwrite"`,
     "--output",
     "json"
   ];
